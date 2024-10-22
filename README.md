@@ -1,4 +1,4 @@
-# my_ml_lib
+# MagiLearn
 24秋季学期机器学习课程作业
 
 - 总目标：实现一个自制机器学习库
@@ -13,7 +13,7 @@
 
 
 ```bash
-my_ml_lib/
+MagiLearn/
 │
 ├── datasets/                 # 数据集模块
 │   ├── __init__.py           # 初始化模块
