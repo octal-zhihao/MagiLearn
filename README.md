@@ -58,7 +58,10 @@ MagiLearn/
 │   ├── test_logistic_regression.py
 │   ├── test_scaler.py
 │   └── ...
-│   
+├── pipeline/                 # 管道模块
+│   ├── __init__.py           # 初始化模块
+│   ├── pipeline.py            # 实现自定义管道的功能
+│   └── pipeline_utils.py      # 辅助功能或工具函数
 │   ...
 │   
 ├── __init__.py               # 顶层模块
