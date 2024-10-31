@@ -74,17 +74,3 @@ class RandomForestClassifier:
         """
         tree_preds = np.array([tree.predict(X) for tree in self.trees])
         return np.apply_along_axis(lambda x: Counter(x).most_common(1)[0][0], axis=0, arr=tree_preds)
-
-    def score(self, X, y):
-        """
-        计算模型在给定数据上的准确率。
-        
-        参数：
-            X (numpy.ndarray): 测试数据特征。
-            y (numpy.ndarray): 测试数据标签。
-            
-        返回：
-            float: 模型的准确率。
-        """
-        y_pred = self.predict(X)
-        return np.mean(y_pred == y)
