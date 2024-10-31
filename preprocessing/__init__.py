@@ -1,4 +1,6 @@
-from .scaler import StandardScaler
-from .encoder import OneHotEncoder
+# preprocessing/__init__.py
 
-__all__ = ['StandardScaler', 'OneHotEncoder']
+from .scaler import StandardScaler, MinMaxScaler
+from .encoder import OneHotEncoder, LabelEncoder
+
+__all__ = ["StandardScaler", "MinMaxScaler", "OneHotEncoder", "LabelEncoder"]

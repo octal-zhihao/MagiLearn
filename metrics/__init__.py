@@ -1,4 +1,9 @@
-from .accuracy import accuracy_score
-from .mean_squared_error import mean_squared_error
+# metrics/__init__.py
 
-__all__ = ['accuracy_score', 'mean_squared_error']
+from .accuracy import calculate_accuracy
+from .precision_recall import calculate_precision, calculate_recall
+from .confusion_matrix import calculate_confusion_matrix
+from .roc_auc import calculate_roc_auc
+
+__all__ = ["calculate_accuracy", "calculate_precision", "calculate_recall",
+           "calculate_confusion_matrix", "calculate_roc_auc"]
