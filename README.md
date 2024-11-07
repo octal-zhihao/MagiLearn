@@ -58,10 +58,6 @@ MagiLearn/
 │   ├── confusion_matrix.py   # 混淆矩阵
 │   └── roc_auc.py            # ROC AUC评估
 │
-├── tests/                    # 测试代码
-│   ├── test_logistic_regression.py
-│   ├── test_scaler.py
-│   └── ...
 ├── pipeline/                 # 管道模块
 │   ├── __init__.py           # 初始化模块
 │   ├── pipeline.py            # 实现自定义管道的功能
