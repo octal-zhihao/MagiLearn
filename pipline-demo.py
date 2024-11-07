@@ -1,5 +1,6 @@
-from sklearn.datasets import make_classification
-from sklearn.preprocessing import StandardScaler
+from datasets import make_classification
+from preprocessing import StandardScaler
+# from sklearn.linear_model import LogisticRegression
 from models.logistic_regression import LogisticRegression
 from pipeline import Pipeline
 

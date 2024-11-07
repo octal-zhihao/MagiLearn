@@ -6,8 +6,6 @@
 
 - 中期目标：具备sklearn库的基础功能，能完成一个demo
 
-> 库的名称待定，咱们可以想一个 `xxx-learn`，确定后再更改项目名称
-
 
 ### 暂定项目结构如下:
 
@@ -24,6 +22,8 @@ MagiLearn/
 ├── feature_selection/        # 特征选择与降维模块
 │   ├── __init__.py           # 初始化模块
 │   ├── select_k_best.py      # 特征选择
+│   ├── REF.py                # 递归特征消除 (RFE)
+│   ├── select_from_model.py  # 基于模型选择特征
 │   └── pca.py                # 主成分分析
 │
 ├── model_selection/          # 模型选择与评估模块
@@ -36,16 +36,20 @@ MagiLearn/
 │   ├── __init__.py           # 初始化模块
 │   ├── logistic_regression.py # 逻辑回归模型
 │   ├── linear_regression.py  # 线性回归模型
-│   ├── svm.py                # 支持向量机分类器
 │   ├── decision_tree.py      # 决策树模型
 │   ├── random_forest.py      # 随机森林分类器
 │   ├── gradient_boosting.py  # 梯度提升分类器
 │   └── k_means.py            # K均值聚类模型
 │
+├── pipeline/                 # 管道模块
+│   ├── __init__.py           # 初始化模块
+│   └── pipeline.py            # 自定义Pipeline实现
+│
 ├── preprocessing/            # 数据预处理模块
 │   ├── __init__.py           # 初始化模块
-│   ├── scaler.py             # 数据缩放 (StandardScaler, MinMaxScaler)
-│   ├── encoder.py            # 数据编码 (OneHotEncoder, LabelEncoder)
+│   ├── scaler.py             # 数据缩放 (StandardScaler, MinMaxScaler, RobustScaler)
+│   ├── encoder.py            # 数据编码 (OneHotEncoder, LabelEncoder, LabelBinarizer)
+│   └── normalizer.py         # 归一化 Normalizer
 │
 ├── metrics/                  # 模型评估模块
 │   ├── __init__.py           # 初始化模块
@@ -86,7 +90,6 @@ MagiLearn/
 
 4. **分类模型 (`models`)**
    - `logistic_regression.py`: 实现逻辑回归模型。
-   - `svm.py`: 实现 `SVM` 分类模型。
    - `decision_tree.py`: 实现决策树分类器 (`DecisionTreeClassifier`)。
    - `random_forest.py`: 实现随机森林分类器 (`RandomForestClassifier`)。
    - `gradient_boosting.py`: 实现梯度提升分类器 (`GradientBoostingClassifier`)。

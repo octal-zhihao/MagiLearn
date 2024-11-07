@@ -1,5 +1,5 @@
 import numpy as np
-class select_k_best:
+class SelectKBest:
     """
     选择 K 个最佳特征的类。
 

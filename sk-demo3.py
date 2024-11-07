@@ -1,5 +1,5 @@
 from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from model_selection import cross_val_score, train_test_split, GridSearchCV
 # from sklearn.preprocessing import StandardScaler
 from preprocessing import StandardScaler, MinMaxScaler
 from sklearn.linear_model import LogisticRegression

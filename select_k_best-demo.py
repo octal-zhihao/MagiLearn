@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.datasets import load_iris
-from sklearn.feature_selection import SelectKBest
-# from select_k_best import select_k_best
+from feature_selection import SelectKBest
+# from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 # 加载 Iris 数据集
 iris = load_iris()
