@@ -41,7 +41,7 @@ print(f"Model Accuracy: {accuracy:.2f}")
 
 ## 主要模块参考文档
 - [数据预处理模块 (`preprocessing`)](#)
-- [模型选择与评估模块 (`model_selection`)](#)
+- [模型选择与评估模块 (`model_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/model_selection.md)
 - [特征选择与降维模块 (`feature_selection`)](#)
 - [分类与回归模型 (`models`)](#)
 - [模型评估模块 (`metrics`)](#)
