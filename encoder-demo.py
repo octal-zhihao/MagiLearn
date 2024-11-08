@@ -1,5 +1,5 @@
 import numpy as np
-from preprocessing import OneHotEncoder, LabelEncoder
+from magilearn.preprocessing import OneHotEncoder, LabelEncoder
 
 # 原始分类数据
 X = np.array([['红色'], ['蓝色'], ['绿色'], ['红色']])

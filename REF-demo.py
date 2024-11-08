@@ -3,6 +3,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 # 实现RFE后更改下面一行
 from sklearn.feature_selection import RFE
+# from magilearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 

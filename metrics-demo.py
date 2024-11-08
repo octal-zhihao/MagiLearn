@@ -2,14 +2,14 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 # from sklearn.preprocessing import StandardScaler
-from preprocessing import StandardScaler, MinMaxScaler
+from magilearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.feature_selection import RFE
 # from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
+from magilearn.metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
 from sklearn.metrics import classification_report
 import numpy as np
 
-from metrics import calculate_roc_auc
+from magilearn.metrics import calculate_roc_auc
 
 # 1. 生成模拟数据集
 X, y = make_classification(

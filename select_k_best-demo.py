@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.datasets import load_iris
-from feature_selection import SelectKBest
+from magilearn.feature_selection import SelectKBest
 # from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 # 加载 Iris 数据集

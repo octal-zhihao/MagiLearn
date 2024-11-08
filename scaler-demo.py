@@ -1,14 +1,14 @@
 from sklearn.datasets import make_classification
-from model_selection import cross_val_score, train_test_split, GridSearchCV
+from magilearn.model_selection import cross_val_score, train_test_split, GridSearchCV
 # from sklearn.preprocessing import StandardScaler
-from preprocessing import StandardScaler, MinMaxScaler
+from magilearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.linear_model import LogisticRegression
 # from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
+from magilearn.metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 import numpy as np
-from metrics import calculate_roc_auc
+from magilearn.metrics import calculate_roc_auc
 
 # 1. 生成模拟数据集
 X, y = make_classification(

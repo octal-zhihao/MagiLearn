@@ -3,7 +3,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 # from sklearn.feature_selection import SelectFromModel
 # 去掉sklearn.后的SelectFromModel效果一致
-from feature_selection import SelectFromModel
+from magilearn.feature_selection import SelectFromModel
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 

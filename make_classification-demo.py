@@ -1,5 +1,5 @@
 # 导入 make_classification 函数
-from datasets.make_classification import make_classification
+from magilearn.datasets.make_classification import make_classification
 # from sklearn.datasets import make_classification
 
 # 生成数据集

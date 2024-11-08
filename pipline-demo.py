@@ -1,8 +1,8 @@
 from datasets import make_classification
-from preprocessing import StandardScaler
+from magilearn.preprocessing import StandardScaler
 # from sklearn.linear_model import LogisticRegression
-from models.logistic_regression import LogisticRegression
-from pipeline import Pipeline
+from magilearn.models.logistic_regression import LogisticRegression
+from magilearn.pipeline import Pipeline
 
 # 生成数据
 X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)

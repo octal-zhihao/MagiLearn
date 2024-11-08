@@ -1,18 +1,59 @@
 # MagiLearn
 
-24秋季学期机器学习课程作业
+MagiLearn 是一个轻量级的自定义机器学习库，旨在提供类似 `scikit-learn` 的功能，支持特征选择、模型选择、数据预处理、分类、回归、聚类等模块。通过模块化设计，MagiLearn 便于扩展并易于集成在机器学习项目中。
 
-- 总目标：实现一个自制机器学习库
-
-- 中期目标：具备sklearn库的基础功能，能完成一个demo
-
-
-### 暂定项目结构如下:
-
-
+## 安装
+MagiLearn 使用 Python 3.x 开发，推荐使用虚拟环境进行安装。
 
 ```bash
-MagiLearn/
+# 克隆项目
+git clone https://github.com/YourGitHubUsername/MagiLearn.git
+cd MagiLearn
+```
+```bash
+# 安装依赖项
+pip install -r requirements.txt
+```
+
+
+## 快速开始
+以下是一个使用 MagiLearn 进行简单逻辑回归的示例：
+
+```python
+from magilearn.datasets import load_iris
+from magilearn.models import LogisticRegression
+from magilearn.model_selection import train_test_split
+
+# 加载数据集
+X, y = load_iris(return_X_y=True)
+
+# 划分数据集
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 训练逻辑回归模型
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 预测并评估
+accuracy = model.score(X_test, y_test)
+print(f"Model Accuracy: {accuracy:.2f}")
+```
+
+## 主要模块参考文档
+- [数据预处理模块 (`preprocessing`)](#)
+- [模型选择与评估模块 (`model_selection`)](#)
+- [特征选择与降维模块 (`feature_selection`)](#)
+- [分类与回归模型 (`models`)](#)
+- [模型评估模块 (`metrics`)](#)
+- [管道模块 (`pipeline`)](#)
+- [数据集模块 (`datasets`)](#)
+
+
+
+## 现阶段项目结构
+
+```bash
+magilearn/
 │
 ├── datasets/                 # 数据集模块
 │   ├── __init__.py           # 初始化模块
@@ -107,10 +148,19 @@ MagiLearn/
 8. **管道 (`pipeline`)**
    - `pipeline.py`: 实现 `Pipeline` 类，用于将数据预处理和模型训练过程串联起来。
 
-### 项目框架说明
-- **层次结构清晰**：每个模块功能单一，例如模型存放在 `models` 文件夹，数据预处理在 `preprocessing`，评估指标在 `metrics` 中等。
-- **方便扩展**：在已有结构基础上，后续可以轻松增加新的模型、算法和功能模块。
-- **易于测试**：将每个功能模块拆分成单独的测试文件，可以在 `tests/` 文件夹中针对不同模型进行单元测试，确保代码正确性。
+9. **数据集 (`datasets`)**
+   - 数据集模块，建设中
 
 
-> *based on gpt's suggestion*
+
+
+## 贡献指南
+欢迎对 MagiLearn 提出反馈和贡献代码！如果你有好的想法或发现问题，请通过提交 Issue 或 Pull Request 参与我们的项目。
+
+### 如何贡献
+1. Fork 本项目并创建新分支
+2. 进行修改和改进
+3. 提交 Pull Request
+
+许可证
+MagiLearn 遵循 [MIT License](https://github.com/octal-zhihao/MagiLearn/blob/main/LICENSE) 开源协议。

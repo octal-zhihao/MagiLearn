@@ -1,7 +1,7 @@
 import numpy as np
-from sklearn.metrics import accuracy_score
+from magilearn.metrics import calculate_accuracy
 
-def cross_val_score(estimator, X, y, cv=5, scoring=accuracy_score):
+def cross_val_score(estimator, X, y, cv=5, scoring=calculate_accuracy):
     """
     执行K折交叉验证并返回每折的得分。
     
