@@ -7,7 +7,6 @@ class GridSearchCV:
         网格搜索交叉验证
 
         参数：
-        ----------
         - estimator: 需要优化的模型，可以是一个Pipeline
         - param_grid: 超参数的网格
         - scoring: 用于评估的评分函数，默认为 accuracy_score
@@ -23,7 +22,6 @@ class GridSearchCV:
         在给定的超参数网格上进行交叉验证
 
         参数：
-        ----------
         - X: 特征矩阵
         - y: 标签向量
         """

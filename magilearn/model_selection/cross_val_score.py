@@ -5,14 +5,14 @@ def cross_val_score(estimator, X, y, cv=5, scoring=calculate_accuracy):
     """
     执行K折交叉验证并返回每折的得分。
     
-    Parameters:
+    参数:
     - estimator: 需要评估的模型
     - X: 特征矩阵
     - y: 标签向量
     - cv: 交叉验证折数
     - scoring: 用于评估的评分函数
     
-    Returns:
+    返回:
     - scores: 每个折叠的得分
     """
     scores = []

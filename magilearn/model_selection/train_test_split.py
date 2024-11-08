@@ -4,13 +4,13 @@ def train_test_split(X, y, test_size=0.25, random_state=None):
     """
     将数据集 X 和 y 拆分为训练集和测试集。
     
-    Parameters:
+    参数:
     - X: 特征矩阵
     - y: 标签向量
     - test_size: 测试集的比例（0 到 1 之间的浮动值）
     - random_state: 随机种子，保证划分的可复现性
     
-    Returns:
+    返回:
     - X_train, X_test, y_train, y_test: 划分后的训练集和测试集
     """
     if random_state is not None:

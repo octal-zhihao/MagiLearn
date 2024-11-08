@@ -162,5 +162,6 @@ magilearn/
 2. 进行修改和改进
 3. 提交 Pull Request
 
-许可证
+## 许可证 | License
+
 MagiLearn 遵循 [MIT License](https://github.com/octal-zhihao/MagiLearn/blob/main/LICENSE) 开源协议。
