@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def calculate_confusion_matrix(y_true, y_pred):
+def confusion_matrix(y_true, y_pred):
     classes = np.unique(y_true)
     matrix = np.zeros((len(classes), len(classes)), dtype=int)
     for i, actual in enumerate(classes):

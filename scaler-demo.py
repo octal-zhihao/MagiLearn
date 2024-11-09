@@ -4,7 +4,7 @@ from magilearn.model_selection import cross_val_score, train_test_split, GridSea
 from magilearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.linear_model import LogisticRegression
 # from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from magilearn.metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
+from magilearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 import numpy as np

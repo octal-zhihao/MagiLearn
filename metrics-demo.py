@@ -4,8 +4,8 @@ from sklearn.ensemble import RandomForestClassifier
 # from sklearn.preprocessing import StandardScaler
 from magilearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.feature_selection import RFE
-# from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from magilearn.metrics import calculate_accuracy as accuracy_score, calculate_confusion_matrix as confusion_matrix, calculate_precision, calculate_recall
+# from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
+from magilearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
 from sklearn.metrics import classification_report
 import numpy as np
 
@@ -48,8 +48,8 @@ y_test_scores = model.predict_proba(X_test_selected)[:, 1]    # 获取正类概�
 
 # 7. 评估模型性能
 print("测试集准确率:", accuracy_score(y_test, y_pred))
-print("测试集精确率:", calculate_precision(y_test, y_pred))
-print("测试集召回率:", calculate_recall(y_test, y_pred))
+print("测试集精确率:", precision_score(y_test, y_pred))
+print("测试集召回率:", recall_score(y_test, y_pred))
 print("\n混淆矩阵:\n", confusion_matrix(y_test, y_pred))
 print("\n分类报告:\n", classification_report(y_test, y_pred))
 
