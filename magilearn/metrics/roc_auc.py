@@ -1,8 +1,24 @@
 # roc_auc.py
+# This script defines a function for calculating the ROC AUC (Receiver Operating Characteristic - Area Under Curve),
+# a metric used to evaluate the performance of binary classification models based on their true positive rate (TPR)
+# and false positive rate (FPR) across different decision thresholds.
+# The AUC represents the area under the ROC curve, providing a single value summary
+# of the model's ability to distinguish between positive and negative classes.
 
 import numpy as np
 
+
 def calculate_roc_auc(y_true, y_scores):
+    """
+    Calculate the ROC AUC score.
+
+    Parameters:
+    y_true (array-like): True binary labels.
+    y_scores (array-like): Predicted scores or probabilities.
+
+    Returns:
+    float: ROC AUC score, representing the area under the ROC curve.
+    """
     thresholds = np.unique(y_scores)
     tprs = []
     fprs = []
@@ -21,5 +37,5 @@ def calculate_roc_auc(y_true, y_scores):
         fprs.append(fpr)
 
     tprs, fprs = np.array(tprs), np.array(fprs)
-    auc = np.trapz(tprs, fprs)  # 计算AUC
+    auc = np.trapz(tprs, fprs)  # Calculate AUC
     return auc
