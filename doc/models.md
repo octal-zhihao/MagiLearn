@@ -205,8 +205,18 @@ class KMeans:
 ```
 ### 使用示例
 ```python
+import numpy as np
 from magilearn.models import KMeans
 
-model = KMeans(n_clusters=3)
+# 生成示例数据
+X = np.array([[1, 2], [1, 4], [1, 0],
+              [10, 2], [10, 4], [10, 0]])
+
+# 初始化并训练模型
+model = KMeans(n_clusters=2, max_iters=300, tol=1e-4)
 model.fit(X)
+
+# 预测样本簇标签
+labels = model.predict(X)
+print("Labels:", labels)
 ```
