@@ -4,12 +4,11 @@ from sklearn.ensemble import RandomForestClassifier
 # from sklearn.preprocessing import StandardScaler
 from magilearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.feature_selection import RFE
-# from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
-from magilearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, roc_auc_score
+# from magilearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, roc_auc_score
 from sklearn.metrics import classification_report
 import numpy as np
 
-from magilearn.metrics import calculate_roc_auc
 
 # 1. 生成模拟数据集
 X, y = make_classification(
@@ -54,8 +53,8 @@ print("\n混淆矩阵:\n", confusion_matrix(y_test, y_pred))
 print("\n分类报告:\n", classification_report(y_test, y_pred))
 
 # 计算并输出 ROC AUC 分数
-train_auc = calculate_roc_auc(y_train, y_train_scores)
-test_auc = calculate_roc_auc(y_test, y_test_scores)
+train_auc = roc_auc_score(y_train, y_train_scores)
+test_auc = roc_auc_score(y_test, y_test_scores)
 
 print("\n训练集 ROC AUC:", train_auc)
 print("测试集 ROC AUC:", test_auc)

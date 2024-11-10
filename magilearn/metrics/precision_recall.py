@@ -1,8 +1,5 @@
-# precision_recall.py
-# This script defines functions for calculating precision and recall scores,
-# two metrics commonly used to evaluate the performance of binary classification models.
-# Precision measures the accuracy of positive predictions, while recall measures the
-# ability of the model to find all positive instances.
+import numpy as np
+
 
 def precision_score(y_true, y_pred):
     """
@@ -16,9 +13,17 @@ def precision_score(y_true, y_pred):
     float: Precision score, representing the proportion of true positives
            out of all positive predictions.
     """
-    true_positive = sum((y_true == 1) & (y_pred == 1))
-    false_positive = sum((y_true == 0) & (y_pred == 1))
+    # Convert y_true and y_pred to NumPy arrays for element-wise operations
+    y_true = np.array(y_true)
+    y_pred = np.array(y_pred)
+
+    # Calculate true positives and false positives
+    true_positive = np.sum((y_true == 1) & (y_pred == 1))
+    false_positive = np.sum((y_true == 0) & (y_pred == 1))
+
+    # Avoid division by zero
     return true_positive / (true_positive + false_positive) if (true_positive + false_positive) > 0 else 0
+
 
 def recall_score(y_true, y_pred):
     """
@@ -32,6 +37,13 @@ def recall_score(y_true, y_pred):
     float: Recall score, representing the proportion of true positives
            out of all actual positive instances.
     """
-    true_positive = sum((y_true == 1) & (y_pred == 1))
-    false_negative = sum((y_true == 1) & (y_pred == 0))
+    # Convert y_true and y_pred to NumPy arrays for element-wise operations
+    y_true = np.array(y_true)
+    y_pred = np.array(y_pred)
+
+    # Calculate true positives and false negatives
+    true_positive = np.sum((y_true == 1) & (y_pred == 1))
+    false_negative = np.sum((y_true == 1) & (y_pred == 0))
+
+    # Avoid division by zero
     return true_positive / (true_positive + false_negative) if (true_positive + false_negative) > 0 else 0

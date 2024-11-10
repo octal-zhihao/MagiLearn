@@ -8,7 +8,7 @@ from magilearn.metrics import accuracy_score, confusion_matrix, precision_score,
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 import numpy as np
-from magilearn.metrics import calculate_roc_auc
+from magilearn.metrics import roc_auc_score
 
 # 1. 生成模拟数据集
 X, y = make_classification(
@@ -49,16 +49,16 @@ y_pred_test = best_model.predict(X_test)
 y_train_scores = best_model.predict_proba(X_train)[:, 1]  # 获取正类概率
 y_test_scores = best_model.predict_proba(X_test)[:, 1]    # 获取正类概率
 # 计算并输出 ROC AUC 分数
-train_auc = calculate_roc_auc(y_train, y_train_scores)
-test_auc = calculate_roc_auc(y_test, y_test_scores)
+train_auc = roc_auc_score(y_train, y_train_scores)
+test_auc = roc_auc_score(y_test, y_test_scores)
 
 # 8. 评估模型性能
 print("\n训练集准确率:", accuracy_score(y_train, y_pred_train))
 print("测试集准确率:", accuracy_score(y_test, y_pred_test))
-print("\n训练集精确确率:", calculate_precision(y_train, y_pred_train))
-print("测试集精确率:", calculate_precision(y_test, y_pred_test))
-print("\n训练集召回率:", calculate_recall(y_train, y_pred_train))
-print("测试集召回率:", calculate_recall(y_test, y_pred_test))
+print("\n训练集精确确率:", precision_score(y_train, y_pred_train))
+print("测试集精确率:", precision_score(y_test, y_pred_test))
+print("\n训练集召回率:", recall_score(y_train, y_pred_train))
+print("测试集召回率:", recall_score(y_test, y_pred_test))
 print("\n训练集 ROC AUC:", train_auc)
 print("测试集 ROC AUC:", test_auc)
 print("\n混淆矩阵 (测试集):\n", confusion_matrix(y_test, y_pred_test))
