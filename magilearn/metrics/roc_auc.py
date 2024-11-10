@@ -2,25 +2,25 @@ import numpy as np
 
 def roc_auc_score(y_true, y_scores):
     """
-    Calculate the ROC AUC score.
+    计算ROC AUC分数。
 
     Parameters:
-    y_true (array-like): True binary labels.
-    y_scores (array-like): Predicted scores or probabilities.
+    y_true (array-like): 真实的二元标签。
+    y_scores (array-like): 预测分数或概率。
 
-    Returns:
-    float: ROC AUC score, representing the area under the ROC curve.
+    Return:
+    float: ROC AUC分数，表示ROC曲线下面积。
     """
-    # Ensure y_true and y_scores are NumPy arrays
+    # 确保 y_true 和 y_scores 是 NumPy 数组
     y_true = np.array(y_true)
     y_scores = np.array(y_scores)
 
-    # Find unique thresholds in descending order
+    # 找到降序排列的唯一阈值
     thresholds = np.sort(np.unique(y_scores))[::-1]
     tprs = []
     fprs = []
 
-    # Iterate over each threshold
+    # 遍历每个阈值
     for threshold in thresholds:
         y_pred = (y_scores >= threshold).astype(int)
         tp = np.sum((y_true == 1) & (y_pred == 1))
@@ -34,18 +34,18 @@ def roc_auc_score(y_true, y_scores):
         tprs.append(tpr)
         fprs.append(fpr)
 
-    # Convert lists to NumPy arrays
+    # 将列表转换为 NumPy 数组
     tprs, fprs = np.array(tprs), np.array(fprs)
 
-    # Add (0,0) and (1,1) to tprs and fprs for a complete curve
+    # 添加 (0,0) 和 (1,1) 到 tprs 和 fprs 以形成完整的曲线
     tprs = np.concatenate(([0], tprs, [1]))
     fprs = np.concatenate(([0], fprs, [1]))
 
-    # Sort fprs and tprs by fprs for correct AUC calculation
+    # 按 fprs 排序 fprs 和 tprs 以确保正确计算 AUC
     sorted_indices = np.argsort(fprs)
     fprs = fprs[sorted_indices]
     tprs = tprs[sorted_indices]
 
-    # Calculate AUC using trapezoidal rule
+    # 使用梯形法则计算 AUC
     auc = np.trapz(tprs, fprs)
     return auc

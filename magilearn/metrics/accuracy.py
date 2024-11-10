@@ -2,23 +2,23 @@ import numpy as np
 
 def accuracy_score(y_true, y_pred):
     """
-    Calculate the accuracy score.
+    计算准确率。
 
     Parameters:
-    y_true (list or array-like): True labels.
-    y_pred (list or array-like): Predicted labels.
+    y_true (list 或 array-like): 真实标签。
+    y_pred (list 或 array-like): 预测标签。
 
     Returns:
-    float: Accuracy score, representing the proportion of correct predictions.
+    float: 准确率，表示正确预测的比例。
     """
-    # Convert y_true and y_pred to NumPy arrays to ensure element-wise comparison
+    # 将 y_true 和 y_pred 转换为 NumPy 数组，以确保逐元素比较
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
-    # Ensure y_true and y_pred have the same length
+    # 确保 y_true 和 y_pred 长度相同
     if len(y_true) != len(y_pred):
-        raise ValueError("y_true and y_pred must be of the same length")
+        raise ValueError("y_true 和 y_pred 必须具有相同的长度")
 
-    # Perform element-wise comparison and count correct predictions
+    # 执行逐元素比较并统计正确预测的数量
     correct = np.sum(y_true == y_pred)
     return correct / len(y_true)
