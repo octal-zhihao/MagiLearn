@@ -22,19 +22,17 @@ class PCA:
 
 ### 使用示例
 ```python
-from magilearn.feature_selection import PCA
+from sklearn.decomposition import PCA
 import numpy as np
 
 # 生成示例数据
-X = np.array([[2.5, 2.4], [0.5, 0.7], [2.2, 2.9], [1.9, 2.2], [3.1, 3.0]])
+X = np.array([[2.5, 2.4, 1.2], [0.5, 0.7, 1.1], [2.2, 2.9, 0.9], [1.9, 2.2, 1.3], [3.1, 3.0, 1.0]])
 
-# PCA 降维
-pca = PCA(n_components=1)
-pca.fit(X)
-X_transformed = pca.transform(X)
+# 保留2个主成分
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
 
-print("降维后的数据:\n", X_transformed)
-
+print("降维后的数据:\n", X_pca)
 
 ```
 
@@ -44,19 +42,22 @@ print("降维后的数据:\n", X_transformed)
 ### 使用示例
 ```python
 from magilearn.feature_selection import RFE
-from magilearn.models import LogisticRegression
+from magilearn.model import LogisticRegression
 import numpy as np
 
 # 生成示例数据
-X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-y = np.array([0, 1, 0])
+X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [2, 3, 4], [1, 2, 5]])
+y = np.array([0, 1, 0, 1, 0])
 
-# 使用 RFE 选择最优特征
-rfe = RFE(estimator=LogisticRegression(), n_features_to_select=2)
+# 选择2个最优特征
+estimator = LogisticRegression()
+rfe = RFE(estimator=estimator, n_features_to_select=2)
 rfe.fit(X, y)
-X_transformed = rfe.transform(X)
+X_rfe = rfe.transform(X)
 
-print("选择的特征:\n", X_transformed)
+print("选择的特征:\n", X_rfe)
+print("特征排名:", rfe.ranking_)
+
 
 ```
 
@@ -77,42 +78,23 @@ class RFE:
 - SelectFromModel 类利用带有特征权重的模型（如线性回归、决策树）进行特征选择，选择权重值高于指定阈值的特征。
 ### 使用示例
 ```python
-import numpy as np
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.feature_selection import SelectFromModel
-# 去掉sklearn.后的SelectFromModel效果一致
 from magilearn.feature_selection import SelectFromModel
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+from magilearn.models import RandomForestClassifier
+import numpy as np
 
-data = load_iris()
-X = data.data
-y = data.target
+# 生成示例数据
+X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 1, 1], [3, 4, 5]])
+y = np.array([0, 1, 0, 1, 0])
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+# 使用 RandomForestClassifier 进行特征选择
+model = RandomForestClassifier(n_estimators=10, random_state=0)
+sfm = SelectFromModel(estimator=model, threshold="mean")
+sfm.fit(X, y)
+X_sfm = sfm.transform(X)
 
-model = DecisionTreeClassifier(random_state=42)
+print("选择的特征:\n", X_sfm)
+print("重要特征索引:", sfm.get_support(indices=True))
 
-model.fit(X_train, y_train)
-
-selector = SelectFromModel(model, threshold="mean")  # 选择重要性大于平均值的特征
-X_train_selected = selector.transform(X_train)
-X_test_selected = selector.transform(X_test)
-
-print("Selected features:", selector.get_support(indices=True))
-
-y_pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy on original features: {accuracy:.4f}")
-
-model_selected = DecisionTreeClassifier(random_state=42)
-model_selected.fit(X_train_selected, y_train)
-
-y_pred = model_selected.predict(X_test_selected)
-
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy on selected features: {accuracy:.4f}")
 
 ```
 
@@ -134,26 +116,21 @@ print(f"Accuracy on selected features: {accuracy:.4f}")
 - SelectKBest 函数用于选择最优的 K 个特征，通常根据单变量统计指标（如卡方、F 值）进行选择。
 ### 使用示例
 ```python
-import numpy as np
-from sklearn.datasets import load_iris
 from magilearn.feature_selection import SelectKBest
-from sklearn.feature_selection import 
+from sklearn.feature_selection import chi2
+import numpy as np
 
-# 加载 Iris 数据集
-iris = load_iris()
-X = iris.data
-y = iris.target
+# 生成示例数据
+X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [2, 2, 2], [3, 3, 3]])
+y = np.array([0, 1, 0, 1, 0])
 
-# 选择 K 个最佳特征
-selector = SelectKBest(score_func=f_classif, k=2)
+# 使用 SelectKBest 选择2个得分最高的特征，使用卡方检验进行打分
+selector = SelectKBest(score_func=chi2, k=2)
+X_kbest = selector.fit_transform(X, y)
 
-# 拟合并转换数据
-X_new = selector.fit_transform(X, y)
+print("选择的特征:\n", X_kbest)
+print("特征得分:", selector.scores_)
 
-# 输出选择的特征
-print("Original feature shape:", X.shape)
-print("Reduced feature shape:", X_new.shape)
-print("Selected features (indices):", selector.get_support(indices=True))
 
 ```
 ### 参数与返回值说明
