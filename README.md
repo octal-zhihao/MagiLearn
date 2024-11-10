@@ -99,10 +99,6 @@ magilearn/
 │   ├── confusion_matrix.py   # 混淆矩阵
 │   └── roc_auc.py            # ROC AUC评估
 │
-├── pipeline/                 # 管道模块
-│   ├── __init__.py           # 初始化模块
-│   ├── pipeline.py            # 实现自定义管道的功能
-│   └── pipeline_utils.py      # 辅助功能或工具函数
 │   ...
 │   
 ├── __init__.py               # 顶层模块
@@ -124,6 +120,7 @@ magilearn/
 3. **特征选择与降维 (`feature_selection` 和 `decomposition`)**
    - `select_k_best.py`: 实现 `SelectKBest` 算法，选择最佳特征。
    - `pca.py`: 实现 `PCA` 降维算法。
+   - `REF.py`: 实现 `REF` 递归特征消除。
 
 4. **分类模型 (`models`)**
    - `logistic_regression.py`: 实现逻辑回归模型。
@@ -149,7 +146,8 @@ magilearn/
    - `pipeline.py`: 实现 `Pipeline` 类，用于将数据预处理和模型训练过程串联起来。
 
 9. **数据集 (`datasets`)**
-   - 数据集模块，建设中
+   - `load_iris.py`: 实现加载Iris数据集
+   - `make_classification.py` 生成模拟数据
 
 
 
