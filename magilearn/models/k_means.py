@@ -20,12 +20,15 @@ class KMeans:
         predict(X): 对新数据进行聚类预测。
     """
 
-    def __init__(self, n_clusters=8, max_iters=300, tol=1e-4):
+    def __init__(self, n_clusters=8, max_iters=300, tol=1e-4, random_state=None):
         self.n_clusters = n_clusters
         self.max_iters = max_iters
         self.tol = tol
-        self.centers = None
+        self.cluster_centers_ = None
         self.labels = None
+        if random_state is not None:
+            np.random.seed(random_state)
+
 
     def _initialize_centers(self, X):
         """
@@ -52,7 +55,7 @@ class KMeans:
             numpy.ndarray: 样本到簇中心的距离矩阵。
         """
         distances = np.zeros((X.shape[0], self.n_clusters))
-        for i, center in enumerate(self.centers):
+        for i, center in enumerate(self.cluster_centers_):
             distances[:, i] = np.linalg.norm(X - center, axis=1)
         return distances
 
@@ -66,7 +69,7 @@ class KMeans:
         返回：
             self: 返回 KMeans 模型自身。
         """
-        self.centers = self._initialize_centers(X)
+        self.cluster_centers_ = self._initialize_centers(X)
 
         for _ in range(self.max_iters):
             # 计算每个样本到簇中心的距离，并分配到最近的簇
@@ -77,10 +80,10 @@ class KMeans:
             new_centers = np.array([X[new_labels == i].mean(axis=0) for i in range(self.n_clusters)])
             
             # 检查是否达到收敛条件
-            if np.linalg.norm(self.centers - new_centers) < self.tol:
+            if np.linalg.norm(self.cluster_centers_ - new_centers) < self.tol:
                 break
             
-            self.centers = new_centers
+            self.cluster_centers_ = new_centers
             self.labels = new_labels
 
         return self
