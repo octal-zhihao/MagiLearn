@@ -2,127 +2,93 @@ import numpy as np
 
 class LogisticRegression:
     """
-    逻辑回归模型，支持二分类和多类分类（通过 OvR 策略）。
-
+    Logistic Regression 模型，用于二分类任务。
+    
+    使用梯度下降法优化模型参数，支持自定义学习率、最大迭代次数和收敛阈值。
+    
     参数：
-        learning_rate : float, default=0.01
-            梯度下降的学习率。
-        n_iters : int, default=1000
-            梯度下降的最大迭代次数。
-        regularization : str, default=None
-            正则化方式，可选 'l2'。若为 None，则不使用正则化。
-        C : float, default=1.0
-            正则化强度的倒数。较小的值表示更强的正则化。
-        multi_class : str, default='ovr'
-            用于多类分类任务的策略。当前支持 'ovr' (one-vs-rest) 策略。
+        learning_rate (float): 梯度下降的学习率，默认值为 0.01。
+        num_iterations (int): 最大迭代次数，默认值为 1000。
+        tol (float): 收敛阈值，当梯度变化小于此值时停止迭代，默认值为 1e-4。
+    
+    属性：
+        coef_ (numpy.ndarray): 模型权重。
+        intercept_ (float): 模型偏置。
     """
-
-    def __init__(self, learning_rate=0.01, n_iters=1000, regularization=None, C=1.0, multi_class='ovr'):
+    
+    def __init__(self, learning_rate=0.01, num_iterations=1000, tol=1e-4):
         self.learning_rate = learning_rate
-        self.n_iters = n_iters
-        self.regularization = regularization
-        self.C = C
-        self.multi_class = multi_class
-        self.weights = None
-        self.bias = None
-        self.classes_ = None
+        self.num_iterations = num_iterations
+        self.tol = tol
+        self.coef_ = None
+        self.intercept_ = None
 
-    def _sigmoid(self, z):
+    @staticmethod
+    def sigmoid(z):
+        """
+        Sigmoid 激活函数，将线性输出转换为概率值。
+        
+        参数：
+            z (numpy.ndarray): 线性模型的输出。
+        
+        返回：
+            numpy.ndarray: Sigmoid 转换后的概率值。
+        """
+        z = np.clip(z, -500, 500)  # 防止数值溢出
         return 1 / (1 + np.exp(-z))
-
-    def _initialize_weights(self, n_features):
-        self.weights = np.zeros(n_features)
-        self.bias = 0
 
     def fit(self, X, y):
         """
-        训练逻辑回归模型。
-
+        拟合逻辑回归模型，使用梯度下降法优化参数。
+        
         参数：
-            X : numpy.ndarray, shape (n_samples, n_features)
-                输入特征矩阵。
-            y : numpy.ndarray, shape (n_samples,)
-                目标标签。支持二分类和多类分类任务。
+            X (numpy.ndarray): 特征矩阵，形状为 (n_samples, n_features)。
+            y (numpy.ndarray): 标签向量，形状为 (n_samples,)。
         """
-        n_samples, n_features = X.shape
-        self.classes_ = np.unique(y)
+        m, n = X.shape  # 样本数和特征数
+        self.coef_ = np.zeros(n)  # 初始化权重
+        self.intercept_ = 0  # 初始化偏置
 
-        if len(self.classes_) > 2:
-            # 多类分类任务 - One-vs-Rest
-            self.models_ = []
-            for cls in self.classes_:
-                y_binary = np.where(y == cls, 1, 0)
-                model = LogisticRegression(
-                    learning_rate=self.learning_rate,
-                    n_iters=self.n_iters,
-                    regularization=self.regularization,
-                    C=self.C
-                )
-                model._fit_binary(X, y_binary)
-                self.models_.append(model)
-        else:
-            # 二分类任务
-            self._fit_binary(X, y)
-
-    def _fit_binary(self, X, y):
-        n_samples, n_features = X.shape
-        self._initialize_weights(n_features)
-
-        # 梯度下降
-        for _ in range(self.n_iters):
-            linear_model = np.dot(X, self.weights) + self.bias
-            y_pred = self._sigmoid(linear_model)
+        for iteration in range(self.num_iterations):
+            # 计算线性模型输出
+            linear_model = np.dot(X, self.coef_) + self.intercept_
+            y_pred = self.sigmoid(linear_model)  # 转换为概率
 
             # 计算梯度
-            dw = (1 / n_samples) * np.dot(X.T, (y_pred - y))
-            db = (1 / n_samples) * np.sum(y_pred - y)
+            dw = (1 / m) * np.dot(X.T, (y_pred - y))  # 权重梯度
+            db = (1 / m) * np.sum(y_pred - y)  # 偏置梯度
 
-            # L2 正则化
-            if self.regularization == 'l2':
-                dw += (1 / self.C) * self.weights / n_samples
+            # 参数更新
+            self.coef_ -= self.learning_rate * dw
+            self.intercept_ -= self.learning_rate * db
 
-            # 更新参数
-            self.weights -= self.learning_rate * dw
-            self.bias -= self.learning_rate * db
-
-    def predict(self, X):
-        """
-        为输入样本预测类别标签。
-
-        参数：
-            X : numpy.ndarray, shape (n_samples, n_features)
-                输入特征矩阵。
-
-        返回：
-            y_pred : list
-                每个样本的预测类别标签。
-        """
-        if len(self.classes_) > 2:
-            # 多类分类任务
-            probs = np.array([model.predict_proba(X)[:, 1] for model in self.models_]).T
-            return np.array([self.classes_[np.argmax(prob)] for prob in probs])
-        else:
-            linear_model = np.dot(X, self.weights) + self.bias
-            y_pred = self._sigmoid(linear_model)
-            return np.array([1 if i > 0.5 else 0 for i in y_pred])
+            # 检查是否收敛
+            if np.linalg.norm(dw) < self.tol and abs(db) < self.tol:
+                print(f"Converged at iteration {iteration + 1}")
+                break
 
     def predict_proba(self, X):
         """
-        返回每个输入样本属于每个类别的概率估计。
-
+        预测每个样本属于正类的概率。
+        
         参数：
-            X : numpy.ndarray, shape (n_samples, n_features)
-            输入特征矩阵。
-
+            X (numpy.ndarray): 特征矩阵，形状为 (n_samples, n_features)。
+        
         返回：
-            y_proba : numpy.ndarray
-                每个样本的类别概率。
+            numpy.ndarray: 样本属于正类的概率，形状为 (n_samples,)。
         """
-        if len(self.classes_) > 2:
-            # 多类分类任务
-            probs = np.array([model.predict_proba(X)[:, 1] for model in self.models_]).T
-            return probs / probs.sum(axis=1, keepdims=True)
-        else:
-            linear_model = np.dot(X, self.weights) + self.bias
-            y_pred = self._sigmoid(linear_model)
-            return np.vstack([1 - y_pred, y_pred]).T
+        linear_model = np.dot(X, self.coef_) + self.intercept_
+        return self.sigmoid(linear_model)
+
+    def predict(self, X):
+        """
+        对样本进行分类预测。
+        
+        参数：
+            X (numpy.ndarray): 特征矩阵，形状为 (n_samples, n_features)。
+        
+        返回：
+            numpy.ndarray: 二分类预测结果（0 或 1），形状为 (n_samples,)。
+        """
+        probabilities = self.predict_proba(X)
+        return (probabilities >= 0.5).astype(int)  # 使用 0.5 作为分类阈值
