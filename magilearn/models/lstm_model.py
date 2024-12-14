@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import numpy as np
 
 class LSTMModel:
     def __init__(self, input_size, hidden_size, output_size, n_layers=1, learning_rate=0.001):

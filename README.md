@@ -20,9 +20,8 @@ pip install -r requirements.txt
 以下是一个使用 MagiLearn 进行简单逻辑回归的示例：
 
 ```python
-from magilearn.datasets import load_iris
+from magilearn.datasets import load_iris, train_test_split
 from magilearn.models import LogisticRegression
-from magilearn.model_selection import train_test_split
 
 # 加载数据集
 X, y = load_iris(return_X_y=True)
@@ -57,7 +56,8 @@ magilearn/
 │
 ├── datasets/                 # 数据集模块
 │   ├── __init__.py           # 初始化模块
-│   └── load_iris.py          # 加载Iris数据集的实现
+│   ├── train_test_split.py   # 数据集划分
+│   ├── load_iris.py          # 加载Iris数据集
 │   └── make_classification.py # 生成模拟数据
 │
 ├── feature_selection/        # 特征选择与降维模块
@@ -69,8 +69,9 @@ magilearn/
 │
 ├── model_selection/          # 模型选择与评估模块
 │   ├── __init__.py           # 初始化模块
-│   ├── train_test_split.py   # 数据集划分
-│   └── grid_search.py        # 网格搜索
+│   ├── grid_search.py        # 网格搜索
+│   ├── save_model.py         # 保存模型
+│   ├── load_model.py         # 加载模型
 │   └── cross_val_score.py    # 交叉验证
 │
 ├── models/                   # 存放各种机器学习模型
@@ -111,43 +112,45 @@ magilearn/
 1. **数据预处理 (`preprocessing`)**
    - `scaler.py`: 实现 `StandardScaler` 和 `MinMaxScaler`。
    - `encoder.py`: 实现 `OneHotEncoder` 和 `LabelEncoder`。
+
+2. **数据集 (`datasets`)**
+   - `load_iris.py`: 实现加载Iris数据集
+   - `make_classification.py` 生成模拟分类数据
+   - `train_test_split.py`: 实现数据集划分函数
    
-2. **模型选择与评估 (`model_selection`)**
-   - `train_test_split.py`: 实现数据集划分函数。
+3. **模型选择与评估 (`model_selection`)**
    - `grid_search.py`: 实现网格搜索算法 (`GridSearchCV`)。
    - `cross_val_score.py`: 实现交叉验证函数。
 
-3. **特征选择与降维 (`feature_selection` 和 `decomposition`)**
+4. **特征选择与降维 (`feature_selection` 和 `decomposition`)**
    - `select_k_best.py`: 实现 `SelectKBest` 算法，选择最佳特征。
    - `pca.py`: 实现 `PCA` 降维算法。
    - `REF.py`: 实现 `REF` 递归特征消除。
 
-4. **分类模型 (`models`)**
+5. **分类模型 (`models`)**
    - `logistic_regression.py`: 实现逻辑回归模型。
    - `decision_tree.py`: 实现决策树分类器 (`DecisionTreeClassifier`)。
    - `random_forest.py`: 实现随机森林分类器 (`RandomForestClassifier`)。
    - `gradient_boosting.py`: 实现梯度提升分类器 (`GradientBoostingClassifier`)。
 
-5. **回归模型 (`models`)**
+6. **回归模型 (`models`)**
    - `linear_regression.py`: 实现线性回归 (`LinearRegression`)。
    - `ridge.py` 和 `lasso.py`: 分别实现岭回归 (`Ridge`) 和 `Lasso` 回归模型。
 
-6. **聚类算法 (`models`)**
+7. **聚类算法 (`models`)**
    - `k_means.py`: 实现 K 均值聚类算法。
    - `dbscan.py`: 实现基于密度的 DBSCAN 聚类算法。
 
-7. **模型评估 (`metrics`)**
+8. **模型评估 (`metrics`)**
    - `accuracy.py`: 实现准确率度量 (`accuracy_score`)。
    - `precision_recall.py`: 实现精确率与召回率 (`precision_score`, `recall_score`)。
    - `confusion_matrix.py`: 实现混淆矩阵 (`confusion_matrix`)。
    - `roc_auc.py`: 实现 `ROC AUC` 分数的评估 (`roc_auc_score`)。
 
-8. **管道 (`pipeline`)**
+9. **管道 (`pipeline`)**
    - `pipeline.py`: 实现 `Pipeline` 类，用于将数据预处理和模型训练过程串联起来。
 
-9. **数据集 (`datasets`)**
-   - `load_iris.py`: 实现加载Iris数据集
-   - `make_classification.py` 生成模拟数据
+
 
 
 

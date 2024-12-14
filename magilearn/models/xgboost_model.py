@@ -1,5 +1,5 @@
 import xgboost as xgb
-
+import numpy as np
 class XGBoostModel:
     def __init__(self, learning_rate=0.1, max_depth=3, n_estimators=100):
         self.learning_rate = learning_rate
