@@ -21,9 +21,10 @@ class DecisionTreeClassifier:
         min_samples_split (int): 节点分裂所需的最小样本数。默认值为 2。
     """
 
-    def __init__(self, max_depth=10, min_samples_split=2):
+    def __init__(self, max_depth=10, min_samples_split=2, max_features=None):
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
+        self.max_features = max_features # 限制每次分裂时选择的特征数量
         self.root = None
 
     class Node:
@@ -83,8 +84,11 @@ class DecisionTreeClassifier:
         n_samples, n_features = X.shape
         best_feature, best_threshold = None, None
         best_gini = float('inf')
+        
+        # 如果 max_features 被设置，随机选择特定数量的特征
+        features_to_consider = np.random.choice(n_features, self.max_features, replace=False) if self.max_features else range(n_features)
 
-        for feature in range(n_features):
+        for feature in features_to_consider:
             thresholds = np.unique(X[:, feature])
             for threshold in thresholds:
                 _, y_left, _, y_right = self._split(X, y, feature, threshold)
@@ -116,10 +120,11 @@ class DecisionTreeClassifier:
         n_samples, n_features = X.shape
         n_labels = len(np.unique(y))
 
-        if depth >= self.max_depth or n_labels == 1 or n_samples < self.min_samples_split:
+        # 如果设置了 max_depth，且当前深度超过 max_depth 或满足终止条件
+        if (self.max_depth is not None and depth >= self.max_depth) or n_labels == 1 or n_samples < self.min_samples_split:
             leaf_value = np.bincount(y).argmax()
             return self.Node(value=leaf_value)
-
+        
         feature, threshold, _ = self._best_split(X, y)
         if feature is None:
             leaf_value = np.bincount(y).argmax()
