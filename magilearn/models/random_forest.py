@@ -1,7 +1,7 @@
 import numpy as np
 from collections import Counter
-from magilearn.models.decision_tree_classifier import DecisionTreeClassifier  # 假设已经实现的决策树
-
+from tqdm import tqdm
+from magilearn.models.decision_tree_classifier import DecisionTreeClassifier
 
 class RandomForestClassifier:
     """
@@ -21,6 +21,14 @@ class RandomForestClassifier:
     """
 
     def __init__(self, n_estimators=100, max_features=None, max_depth=None, min_samples_split=2):
+        # 参数检查
+        if not isinstance(n_estimators, int) or n_estimators <= 0:
+            raise ValueError("n_estimators 必须是正整数")
+        if max_features not in [None, 'sqrt'] and (not isinstance(max_features, int) or max_features <= 0):
+            raise ValueError("max_features 必须是 None, 'sqrt' 或正整数")
+        if not isinstance(min_samples_split, int) or min_samples_split <= 0:
+            raise ValueError("min_samples_split 必须是正整数")
+
         self.n_estimators = n_estimators
         self.max_features = max_features
         self.max_depth = max_depth
@@ -53,6 +61,12 @@ class RandomForestClassifier:
         返回：
             None
         """
+        # 数据检查
+        if not isinstance(X, np.ndarray) or not isinstance(y, np.ndarray):
+            raise ValueError("X 和 y 必须是 numpy.ndarray 类型")
+        if X.shape[0] != y.shape[0]:
+            raise ValueError("特征矩阵 X 和标签向量 y 的样本数必须一致")
+
         self.trees = []
         n_features = X.shape[1]
 
@@ -62,12 +76,17 @@ class RandomForestClassifier:
         else:
             max_features = self.max_features or n_features  # 默认使用所有特征
 
-        for _ in range(self.n_estimators):
-            tree = DecisionTreeClassifier(max_depth=self.max_depth, min_samples_split=self.min_samples_split,
-                                          max_features=max_features)
-            X_sample, y_sample = self._bootstrap_sample(X, y)
-            tree.fit(X_sample, y_sample)
-            self.trees.append(tree)
+        # 使用 tqdm 包装训练过程
+        for i in tqdm(range(self.n_estimators), desc="Training Trees", ncols=100):
+            try:
+                tree = DecisionTreeClassifier(max_depth=self.max_depth, min_samples_split=self.min_samples_split,
+                                              max_features=max_features)
+                X_sample, y_sample = self._bootstrap_sample(X, y)
+                tree.fit(X_sample, y_sample)
+                self.trees.append(tree)
+            except Exception as e:
+                print(f"训练第 {i + 1} 棵树时发生错误: {e}")
+                continue
 
     def predict(self, X):
         """
@@ -79,5 +98,13 @@ class RandomForestClassifier:
         返回：
             numpy.ndarray: 每个样本的预测标签。
         """
+        # 输入检查
+        if not isinstance(X, np.ndarray):
+            raise ValueError("输入特征 X 必须是 numpy.ndarray 类型")
+
+        # 获取每棵树的预测结果
         tree_preds = np.array([tree.predict(X) for tree in self.trees])
-        return np.apply_along_axis(lambda x: Counter(x).most_common(1)[0][0], axis=0, arr=tree_preds)
+        try:
+            return np.apply_along_axis(lambda x: Counter(x).most_common(1)[0][0], axis=0, arr=tree_preds)
+        except Exception as e:
+            raise ValueError(f"在预测时发生错误: {e}")
