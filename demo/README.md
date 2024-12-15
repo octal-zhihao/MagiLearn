@@ -1,1 +1,1 @@
-# 所有demo需要和magilearn在同一目录下运行
+# 所有demo单独运行需要和magilearn在同一目录下运行
