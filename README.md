@@ -21,25 +21,30 @@ pip install -r requirements.txt
 
 
 ## 快速开始
-以下是一个使用 MagiLearn 进行简单逻辑回归的示例：
+以下是一个使用 MagiLearn 进行简单逻辑回归进行二分类的示例：
 
 ```python
-from magilearn.datasets import load_iris, train_test_split
+from magilearn.datasets import load_iris
 from magilearn.models import LogisticRegression
+from magilearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-# 加载数据集
-X, y = load_iris(return_X_y=True)
+# 加载鸢尾花数据集
+iris = load_iris()
+X = iris['data']
+y = (iris['target'] != 0).astype(int) # 二分类任务
 
-# 划分数据集
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# 数据集划分
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=52)
 
 # 训练逻辑回归模型
-model = LogisticRegression()
+model = LogisticRegression(learning_rate=0.001, num_iterations=10000, tol=1e-6)
 model.fit(X_train, y_train)
 
 # 预测并评估
-accuracy = model.score(X_test, y_test)
+accuracy = accuracy_score(y_test, model.predict(X_test))
 print(f"Model Accuracy: {accuracy:.2f}")
+
 ```
 
 ## 主要模块API文档
@@ -128,7 +133,7 @@ magilearn/
    - `save_model.py`: 实现模型参数的保存。
    - `load_model.py`: 实现模型参数的载入。
 
-4. **特征选择与降维 (`feature_selection` 和 `decomposition`)**
+4. **特征选择与降维 (`feature_selection`)**
    - `select_k_best.py`: 实现 `SelectKBest` 算法，选择最佳特征。
    - `pca.py`: 实现 `PCA` 降维算法。
    - `REF.py`: 实现 `REF` 递归特征消除。
@@ -141,7 +146,7 @@ magilearn/
 
 6. **回归模型 (`models`)**
    - `linear_regression.py`: 实现线性回归 (`LinearRegression`)。
-   - `ridge.py` 和 `lasso.py`: 分别实现岭回归 (`Ridge`) 和 `Lasso` 回归模型。
+   - `ridge.py` : 分别实现岭回归 (`Ridge`)。
 
 7. **聚类算法 (`models`)**
    - `k_means.py`: 实现 K 均值聚类算法。
