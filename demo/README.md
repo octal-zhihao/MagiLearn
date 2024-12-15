@@ -1,0 +1,1 @@
+# 所有demo需要和magilearn在同一目录下运行

@@ -101,6 +101,9 @@ def cross_val_score(estimator, X, y, cv=5, scoring=calculate_accuracy):
 ## 3. 模型保存与载入模块 (save_model.py & load_model.py)
 
 ### 参数与返回值说明
+
+保存模块
+
 ```python
 def save_model(model, filename):
     """
@@ -110,5 +113,20 @@ def save_model(model, filename):
         model : 训练好的模型对象
         filename : str
             模型保存的文件路径和名称
+    """
+```
+
+载入模块
+```python
+def load_model(filename):
+    """
+    从文件加载已保存的模型。
+
+    参数：
+        filename : str
+            模型文件路径和名称
+    
+    返回：
+        model : 已加载的模型对象
     """
 ```

@@ -2,6 +2,10 @@
 
 MagiLearn 是一个轻量级的自定义机器学习库，旨在提供类似 `scikit-learn` 的功能，支持特征选择、模型选择、数据预处理、分类、回归、聚类等模块。通过模块化设计，MagiLearn 便于扩展并易于集成在机器学习项目中。
 
+## Document
+
+项目文档地址：https://magilearn-tutorial.readthedocs.io/
+
 ## 安装
 MagiLearn 使用 Python 3.x 开发，推荐使用虚拟环境进行安装。
 
@@ -38,7 +42,7 @@ accuracy = model.score(X_test, y_test)
 print(f"Model Accuracy: {accuracy:.2f}")
 ```
 
-## 主要模块参考文档
+## 主要模块API文档
 - [数据预处理模块 (`preprocessing`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/preprocessing.md)
 - [模型选择与评估模块 (`model_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/model_selection.md)
 - [特征选择与降维模块 (`feature_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/feature_selection.md)
@@ -121,6 +125,8 @@ magilearn/
 3. **模型选择与评估 (`model_selection`)**
    - `grid_search.py`: 实现网格搜索算法 (`GridSearchCV`)。
    - `cross_val_score.py`: 实现交叉验证函数。
+   - `save_model.py`: 实现模型参数的保存。
+   - `load_model.py`: 实现模型参数的载入。
 
 4. **特征选择与降维 (`feature_selection` 和 `decomposition`)**
    - `select_k_best.py`: 实现 `SelectKBest` 算法，选择最佳特征。
