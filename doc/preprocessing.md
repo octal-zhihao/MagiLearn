@@ -8,7 +8,7 @@
 
 ## 2. 数据预处理工具
 
-### 2.1 标准化 (Standardization) - StandardScaler
+### 2.1 标准化 (Standardization)
 
 **StandardScaler** 将数据标准化，使每个特征的均值为 0，方差为 1，适用于需要标准正态分布的数据。
 
