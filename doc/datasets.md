@@ -1,6 +1,42 @@
 # 数据集模块
 
-## 1. 数据集划分 (train_test_split.py)
+## 1. 加载数据集 (load.iris.py)
+### 功能
+- 加载并返回鸢尾花数据集（与 sklearn 一致的结构），数据从 `datasets/data/` 路径中的多个文件中读取。
+
+### 参数与返回值说明
+```python
+def load_iris(return_X_y=False):
+    """
+    加载并返回鸢尾花数据集（与 sklearn 一致的结构），数据从 `datasets/data/` 路径中的多个文件中读取。
+    
+    参数:
+    - return_X_y (bool): 如果为 True，返回 (X, y) 而不是字典格式。
+    
+    返回值:
+    - 如果 return_X_y=False，返回字典格式，包含 'data', 'target', 'target_names', 'feature_names', 'DESCR'。
+    - 如果 return_X_y=True，返回 (X, y) 元组。
+    """
+```
+### 使用示例
+```python
+from magilearn.datasets.load_iris import load_iris
+
+# 加载数据集
+iris = load_iris()
+
+# 查看数据集信息
+print("特征名称:", iris['feature_names'])
+print("数据形状:", iris['data'].shape)
+print("目标名称:", iris['target_names'])
+print("描述信息:", iris['DESCR'])
+print("数据示例:")
+print(iris['data'][:5])  # 打印前5个样本
+print("目标示例:")
+print(iris['target'][:5])  # 打印前5个标签
+```
+
+## 2. 数据集划分 (train_test_split.py)
 ### 功能
 - train_test_split 函数将数据集划分为训练集和测试集，用于模型的训练和评估。
 
@@ -39,7 +75,7 @@ print("y_train:", y_train)
 print("y_test:", y_test)
 ```
 
-## 2. 数据集生成 (make_classification)
+## 3. 数据集生成 (make_classification)
 ### 功能
 - make_classification 函数用于生成一个用于分类任务的随机数据集。用户可以自定义特征数、类别数、信息性特征数、冗余特征数等，此外，还可以通过控制类别间隔来增强类别之间的分离性。
 
@@ -82,7 +118,7 @@ print("标签数组 y:\n", y[:5])  # 打印前五个标签
 
 ```
 
-## 2. 调整类别之间的分离性
+## 4. 调整类别之间的分离性
 ### 功能
 - class_sep 参数能够控制不同类别之间的分离度。默认情况下，类别之间的间隔为 1.0。增大 class_sep 的值会增加类别之间的分离度，生成的样本之间的区分更加明显。
 ### 影响
