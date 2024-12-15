@@ -1,8 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
+from magilearn.datasets import make_classification, train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.ensemble import RandomForestClassifier as SklearnRandomForest
 from magilearn.models import RandomForestClassifier
