@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier as SklearnDecisionTree
-from magilearn.models.decision_tree_classifier import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier as SklearnDTC
+from ..magilearn.models import DecisionTreeClassifier
 
 # 1. 加载鸢尾花数据集
 iris = load_iris()
@@ -26,7 +26,7 @@ custom_clf.fit(X_train, y_train)
 y_pred_custom = custom_clf.predict(X_test)
 
 # 4. 使用 sklearn 的决策树分类器训练并预测
-sklearn_clf = SklearnDecisionTree(max_depth=3, min_samples_split=4)
+sklearn_clf = SklearnDTC(max_depth=3, min_samples_split=4)
 sklearn_clf.fit(X_train, y_train)
 y_pred_sklearn = sklearn_clf.predict(X_test)
 
