@@ -39,13 +39,13 @@ print(f"Model Accuracy: {accuracy:.2f}")
 ```
 
 ## 主要模块参考文档
-- [数据预处理模块 (`preprocessing`)](#)
+- [数据预处理模块 (`preprocessing`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/preprocessing.md)
 - [模型选择与评估模块 (`model_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/model_selection.md)
-- [特征选择与降维模块 (`feature_selection`)](#)
-- [分类与回归模型 (`models`)](#)
-- [模型评估模块 (`metrics`)](#)
-- [管道模块 (`pipeline`)](#)
-- [数据集模块 (`datasets`)](#)
+- [特征选择与降维模块 (`feature_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/feature_selection.md)
+- [分类与回归模型 (`models`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/models.md)
+- [模型评估模块 (`metrics`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/metrics.md)
+- [管道模块 (`pipeline`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/pipline.md)
+- [数据集模块 (`datasets`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/datasets.md)
 
 
 
@@ -149,9 +149,6 @@ magilearn/
 
 9. **管道 (`pipeline`)**
    - `pipeline.py`: 实现 `Pipeline` 类，用于将数据预处理和模型训练过程串联起来。
-
-
-
 
 
 
