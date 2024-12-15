@@ -1,5 +1,5 @@
 import numpy as np
-from decision_tree import DecisionTreeClassifier  # 假设已实现的决策树分类器
+from magilearn.models.decision_tree_classifier import DecisionTreeClassifier  # 假设已实现的决策树分类器
 
 class GradientBoostingClassifier:
     """
