@@ -154,7 +154,6 @@ magilearn/
 
 7. **聚类算法 (`models`)**
    - `k_means.py`: 实现 K 均值聚类算法。
-   - `dbscan.py`: 实现基于密度的 DBSCAN 聚类算法。
 
 8. **模型评估 (`metrics`)**
    - `accuracy.py`: 实现准确率度量 (`accuracy_score`)。
