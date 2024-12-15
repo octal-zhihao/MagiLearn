@@ -18,6 +18,10 @@ cd MagiLearn
 # 安装依赖项
 pip install -r requirements.txt
 ```
+```bash
+# 在根目录中运行项目demo
+python -m demo.xxx-demo
+```
 
 
 ## 快速开始

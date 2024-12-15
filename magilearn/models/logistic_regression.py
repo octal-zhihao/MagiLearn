@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 class LogisticRegression:
     """
@@ -8,7 +9,7 @@ class LogisticRegression:
     
     参数：
         learning_rate (float): 梯度下降的学习率，默认值为 0.01。
-        num_iterations (int): 最大迭代次数，默认值为 1000。
+        num_iterations (int): 最大迭代次数，默认值为 5000。
         tol (float): 收敛阈值，当梯度变化小于此值时停止迭代，默认值为 1e-4。
     
     属性：
@@ -16,7 +17,15 @@ class LogisticRegression:
         intercept_ (float): 模型偏置。
     """
     
-    def __init__(self, learning_rate=0.01, num_iterations=1000, tol=1e-4):
+    def __init__(self, learning_rate=0.01, num_iterations=5000, tol=1e-4):
+        # 检查输入参数
+        if not isinstance(learning_rate, (int, float)) or learning_rate <= 0:
+            raise ValueError("学习率 'learning_rate' 必须是正数")
+        if not isinstance(num_iterations, int) or num_iterations <= 0:
+            raise ValueError("最大迭代次数 'num_iterations' 必须是正整数")
+        if not isinstance(tol, (int, float)) or tol < 0:
+            raise ValueError("收敛阈值 'tol' 必须是非负数")
+        
         self.learning_rate = learning_rate
         self.num_iterations = num_iterations
         self.tol = tol
@@ -34,7 +43,8 @@ class LogisticRegression:
         返回：
             numpy.ndarray: Sigmoid 转换后的概率值。
         """
-        z = np.clip(z, -500, 500)  # 防止数值溢出
+        # 防止数值溢出
+        z = np.clip(z, -500, 500)
         return 1 / (1 + np.exp(-z))
 
     def fit(self, X, y):
@@ -45,11 +55,22 @@ class LogisticRegression:
             X (numpy.ndarray): 特征矩阵，形状为 (n_samples, n_features)。
             y (numpy.ndarray): 标签向量，形状为 (n_samples,)。
         """
+        # 数据检查
+        if not isinstance(X, np.ndarray):
+            raise ValueError("输入特征矩阵 'X' 必须是 numpy.ndarray 类型")
+        if not isinstance(y, np.ndarray):
+            raise ValueError("标签 'y' 必须是 numpy.ndarray 类型")
+        
         m, n = X.shape  # 样本数和特征数
+        
+        if y.shape[0] != m:
+            raise ValueError(f"标签 'y' 的样本数必须与特征矩阵 'X' 的样本数相同 ({m})")
+
+        # 初始化权重和偏置
         self.coef_ = np.zeros(n)  # 初始化权重
         self.intercept_ = 0  # 初始化偏置
 
-        for iteration in range(self.num_iterations):
+        for iteration in tqdm(range(self.num_iterations), desc="Training Logistic Regression", unit="iter"):
             # 计算线性模型输出
             linear_model = np.dot(X, self.coef_) + self.intercept_
             y_pred = self.sigmoid(linear_model)  # 转换为概率
@@ -58,6 +79,10 @@ class LogisticRegression:
             dw = (1 / m) * np.dot(X.T, (y_pred - y))  # 权重梯度
             db = (1 / m) * np.sum(y_pred - y)  # 偏置梯度
 
+            # 防止梯度更新过大导致数值不稳定
+            if np.isnan(dw).any() or np.isnan(db):
+                raise ValueError("在计算梯度时出现了无效值（NaN），可能是数值不稳定")
+            
             # 参数更新
             self.coef_ -= self.learning_rate * dw
             self.intercept_ -= self.learning_rate * db
@@ -77,6 +102,9 @@ class LogisticRegression:
         返回：
             numpy.ndarray: 样本属于正类的概率，形状为 (n_samples,)。
         """
+        if not isinstance(X, np.ndarray):
+            raise ValueError("输入特征矩阵 'X' 必须是 numpy.ndarray 类型")
+        
         linear_model = np.dot(X, self.coef_) + self.intercept_
         return self.sigmoid(linear_model)
 
