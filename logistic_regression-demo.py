@@ -1,26 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from magilearn.datasets import load_iris, train_test_split
+from magilearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression as SklearnLogisticRegression
 from magilearn.models import LogisticRegression
 
 # 加载鸢尾花数据集
 iris = load_iris()
-X = iris.data[:, :2]  # 选择前两个特征进行可视化
-y = (iris.target != 0).astype(int)  # 将多分类问题转化为二分类问题（非类别 0 为正类）
+X = iris['data'][:, :2]  # 选择前两个特征进行可视化
+y = (iris['target'] != 0).astype(int)  # 将多分类问题转化为二分类问题（非类别 0 为正类）
 
 # 数据集划分
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=52)
 
 # 使用自定义的逻辑回归模型
 custom_model = LogisticRegression(learning_rate=0.001, num_iterations=10000, tol=1e-6)
-custom_model.fit(X_train, y_train)  # 拟合自定义模型
+custom_model.fit(X_train, y_train)
 
 # 使用 sklearn 的逻辑回归模型
 sklearn_model = SklearnLogisticRegression(solver='lbfgs', max_iter=10000, tol=1e-6)
-sklearn_model.fit(X_train, y_train)  # 拟合 sklearn 模型
+sklearn_model.fit(X_train, y_train)
 
 # 预测并评估模型
 y_pred_custom = custom_model.predict(X_test)
