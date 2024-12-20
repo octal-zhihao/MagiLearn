@@ -53,8 +53,8 @@ print(f"Model Accuracy: {accuracy:.2f}")
 
 ## 主要模块API文档
 - [数据预处理模块 (`preprocessing`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/preprocessing.md)
-- [模型选择与评估模块 (`model_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/model_selection.md)
-- [特征选择与降维模块 (`feature_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/feature_selection.md)
+- [模型选择模块 (`model_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/model_selection.md)
+- [特征选择模块 (`feature_selection`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/feature_selection.md)
 - [分类与回归模型 (`models`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/models.md)
 - [模型评估模块 (`metrics`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/metrics.md)
 - [管道模块 (`pipeline`)](https://github.com/octal-zhihao/MagiLearn/blob/main/doc/pipline.md)
